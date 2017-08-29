@@ -1,0 +1,16 @@
+.DS_Store
+*/target/**
+target
+.idea/*
+.vagrant
+*.iml
+node/
+node_modules/
+docs/
+*.versionsBackup
+*.orig
+*/logs/*
+offline-experiments.json
+service_info.yml
+
+nb-configuration.xml
