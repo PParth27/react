@@ -1,5 +1,6 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var TodoConstants = require('../constants/TodoConstants');
+var UserApi = require('../utils/UserApi');
 
 module.exports = {
   addItem: function() {
@@ -18,5 +19,11 @@ module.exports = {
       actionType: TodoConstants.REMOVE_ITEM,
       index: index
     })
+  },
+  getRandom: function() {
+    AppDispatcher.handleViewAction({
+      actionType: TodoConstants.GET_RANDOM
+    });
+    UserApi.getRandomTodo();
   }
 };

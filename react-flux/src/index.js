@@ -6,37 +6,29 @@ var TodoActions = require('./actions/TodoActions.js');
 var TodoItem = React.createClass({
 
   render: function() {
-
     return(
       <tr>
         <td>{this.props.item}</td>
         <td>
-          <button type="button" onClick={this._delete} className="btn btn-link pull-right">
-            <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          <button onClick={this._delete}>
+            Delete
           </button>
         </td>
       </tr>
     )
   },
-
   _delete: function() {
     console.log('Deleting item key: ' + this.props.index);
     TodoActions.removeItem(this.props.index);
   }
 });
-
-
 var EditTodo = React.createClass({
-
   getInitialState: function() {
-
     return {
       text: ''
     }
   },
-
   render: function() {
-
     return(
       <tr>
         <td><input
@@ -45,58 +37,44 @@ var EditTodo = React.createClass({
             onChange={this._onChange}
             onKeyDown={this._catchEnter}
             placeholder="Add new todo..."
-            className="form-control"
-            autoFocus={true}
           /></td>
         <td>
-          <button type="button"
-            onClick={this._save}
-            className="btn btn-link pull-right">
-            <span className="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          <button
+            onClick={this._save}>Add
           </button>
         </td>
       </tr>
     )
   },
-
   _onChange: function(e) {
     this.setState({
       text: e.target.value
     });
   },
-
   _save: function() {
     TodoActions.saveItem(this.state.text);
   },
-
   _catchEnter: function(e) {
     if(e.keyCode === 13) {
       this._save();
     }
   }
-
-
 });
 
-
 var TodoList = React.createClass({
-
   render: function() {
-
     var rows = [];
     if(this.props.list) {
       this.props.list.map(function(item, index) {
         rows.push(<TodoItem key={index} index={index} item={item} />);
       });
     }
-
     if(this.props.editing) {
       rows.push(<EditTodo key={-1} />);
     }
-
     return(
-      <div className="table-responsive">
-      <table className="table">
+      <div>
+      <table>
         <tbody>
           {rows}
         </tbody>
@@ -106,25 +84,28 @@ var TodoList = React.createClass({
   }
 });
 
-
 var AddTodo = React.createClass({
-
   render: function() {
     return(
-      <button type="button" onClick={this._add} className="btn btn-link btn-block btn-lg">
-        <span className="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      <div>
+      <button onClick={this._add} >
+        Add To do
       </button>
+      <button onClick={this._random}>
+        Get Random Todo From Api
+      </button>
+    </div>
     )
   },
-
   _add: function() {
     TodoActions.addItem();
+  },
+  _random: function() {
+    TodoActions.getRandom();
   }
 });
 
-
 var TodoApp = React.createClass({
-
   getInitialState: function() {
     return TodoStore.getList();
   },
@@ -143,19 +124,11 @@ var TodoApp = React.createClass({
 
   render: function() {
     return(
-      <div className="container">
-      <div className="row">
-        <div className="col-xs-12 col-sm-6 col-sm-offset-3">
-          <div className="panel panel-default">
-            <div className="panel-heading">
-              <AddTodo />
-            </div>
-            <div className="panel-body">
-              <TodoList list={this.state.list} editing={this.state.editing} />
-            </div>
-          </div>
+      <div>
+        <AddTodo />
+        <div>
+          <TodoList list={this.state.list} editing={this.state.editing} />
         </div>
-      </div>
       </div>
     )
   }

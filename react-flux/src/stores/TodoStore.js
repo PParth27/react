@@ -37,6 +37,10 @@ AppDispatcher.register((payload) => {
       _store.list.splice(action.index, 1);
       TodoStore.emit(CHANGE_EVENT);
       break;
+    case AppConstants.GET_RANDOM_RESPONSE :
+      _store.list.push(action.response);
+      TodoStore.emit(CHANGE_EVENT);
+      break;
     default :
       return true;
   }
